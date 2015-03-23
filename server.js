@@ -8,7 +8,7 @@ var favicon = require('serve-favicon');
 var logger = require('logger');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// var expressLayouts = require('express-ejs-layouts');
+var expressLayouts = require('express-ejs-layouts');
 
 
 
