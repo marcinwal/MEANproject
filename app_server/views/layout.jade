@@ -1,7 +1,12 @@
 doctype html
 html
   head
+    meta(name='viewport',content='width=device-width, initial-scale=1.0')
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/public/bootstrap/css/styles.css')
+    link(rel='stylesheet', href='/public/stylesheets/style.css')
   body
     block content
+
+    script(src='//code.jquery.com/jquery-1.9.1.js')
+    script(src='/public/bootstrap/js/bootstrap.min.js')

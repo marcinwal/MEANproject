@@ -4,7 +4,7 @@ var server = require('http').createServer(app);
 
 var http = require('http');
 var path = require('path');
-var favicon = require('favicon');
+var favicon = require('serve-favicon');
 var logger = require('logger');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -19,6 +19,7 @@ app.set('view engine','jade');
 
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
+app.use(favicon(__dirname + '/public/images/favicon.png'));
 // app.use(expressLayouts);  
 
 app.use(express.static(__dirname,'/public')).use(cookieParser());
@@ -28,7 +29,7 @@ app.use(express.static(__dirname,'/public')).use(cookieParser());
 require('./routes')(app);
 
 server.listen(app.get('port'),function(){
-  console.log("Server is runnin at" + app.get('port'));
+  console.log("Server is runnin at port:" + app.get('port'));
 });
 
 module.exports = server;
