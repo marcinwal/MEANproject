@@ -11,6 +11,7 @@
     "cookieparser": "^0.1.0",
     "debug": "~2.1.1",
     "express": "~4.12.2",
+    "express-ejs-layouts": "^1.1.0",
     "favicon": "0.0.2",
     "jade": "~1.9.2",
     "logger": "0.0.1",
