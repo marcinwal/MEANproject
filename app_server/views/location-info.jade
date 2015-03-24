@@ -1,0 +1,83 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1 Starcups
+  .row
+    .col-xs-12.col-md-9
+      .row
+        .col-xs-12.col-sm-6
+           p.rating
+             span.glyphicon.glyphicon-star
+             span.glyphicon.glyphicon-star
+             span.glyphicon.glyphicon-star
+             span.glyphicon.glyphicon-star-empty
+             span.glyphicon.glyphicon-star-empty
+          p 125 Lock Road, TW9 2JD
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Opening hours
+            .panel-body
+              p Monday-Friday : 7:00am - 8:00pm
+              p Saturday:     8:00am:8.00pm
+              p Sunday: Closed
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Facilities
+            .panel-body
+              span.label.label-warning
+                span.glyphicon.glyphicon-ok
+                | &nbsp;Hot drinks
+              | &nbsp
+              span.label.label-warning
+                span.glyphicon.glyphicon-ok
+                | &nbsp;Food
+              | &nbsp
+              span.label.label-warning
+                span.glyphicon.glyphicon-ok
+                | &nbsp;Premium wifi
+              | &nbsp
+        .col-xs-12.col-sm-6.location-map
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Location map
+            .panel-body
+              img.img-responsive.img-rounded(src='http://maps.google.com/maps/api/staticmap?center=51.455041,-0.9690884&zoom=17&size=400x350&sensor=false&markers=51,455041,-0.9690884&scale=2')
+      .row
+        .col-xs-12
+          .panel.panel-primary.review-panel
+            .panel-heading
+              a.btn.btn-default.pull-right(href='/location/review/new') Add review
+              h2.panel-title. Customer reviews
+            .panel-body.review-container
+              .row
+                .review
+                  .well.well-sm.review-header
+                    span.rating
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                    span.reviewAuthor Marcin
+                    small.reviewTimestamp 16 March 2015
+                    .col-xs-12
+                      p Waht a cool place. All good.
+                .review
+                  .well.well-sm.review-header
+                    span.rating
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star
+                      span.glyphicon.glyphicon-star-empty
+                    span.reviewAuthor Gonzo
+                    small.reviewTimestamp 12 Jan 2015
+                    .col-xs-12
+                      p It was okish. Coffee too cold.
+    .col-xs-12.col-md-3
+      p.lead Simon cafe is on couse there is wifi
+      p If you've been there please leave a review
+
+
