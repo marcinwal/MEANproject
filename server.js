@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
+require('./app_server/models/db');
+
 
 var http = require('http');
 var path = require('path');
