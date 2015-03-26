@@ -2,7 +2,7 @@ var mongoose = require('mongoose'); //have to call it in db.js now
 
 //definition of nested schema before the main 
 
-var openingTimeSchema = new.mongoose.Schema({
+var openingTimeSchema = new mongoose.Schema({
   days: {type: String, required: true},
   opening: String,
   closing: String,
@@ -22,11 +22,11 @@ var locationSchema = new mongoose.Schema({
   rating: {type: Number, "default": 0, min: 0, max: 5},
   facilities: [String],
   coords: {type: [Number], index: '2sphere'},
-  openingTimes: [openingTimeSchema]
+  openingTimes: [openingTimeSchema],
   reviews: [reviewSchema]
 });
 
-mongoose.model('Location','locationSchema');
+mongoose.model('Location',locationSchema);
 
 
 
