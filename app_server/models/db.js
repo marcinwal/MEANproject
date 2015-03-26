@@ -8,15 +8,15 @@ mongoose.connection.on('connected',function(){
   console.log('Mongoose is connected to ' + dbURI);
 });
 
-mongoose.connection.on('error',function(error){
-  console.log('Mongoose connection error ' + error);
+mongoose.connection.on('error',function (err){
+  console.log('Mongoose connection error ' + err);
 });
 
-mongoose.connection.on('disconnected',function(){
+mongoose.connection.on('disconnected', function(){
   console.log('Mongoose is disconnected');
 });
 
-var gracefullShutdown = function(msg,callback){
+var gracefulShutdown = function(msg,callback){
   mongoose.connection.close(function(){
     console.log('Mongoose disconnected through '+ msg);
     callback;
@@ -24,20 +24,21 @@ var gracefullShutdown = function(msg,callback){
 };
 
 process.once('SIGUSR2',function(){
-  gracefullShutdown('nodemon restart',function(){
+  gracefulShutdown('nodemon restart', function(){
     process.kill(process.pid,'SIGUSR2');
   });
 });
 
 process.on('SIGINT',function(){
-  gracefullShutdown('app termination',function(){
+  gracefulShutdown('app termination', function(){
     process.exit(0);
   });
 });
 
 process.on('SIGTERM',function(){
-  gracefullShutdown('heroku shutdown',function(){
+  gracefulShutdown('heroku shutdown', function(){
     process.exit(0);
   });
 });
 
+require('./locations');

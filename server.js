@@ -31,7 +31,7 @@ app.use(express.static(__dirname,'/public')).use(cookieParser());
 require('./routes')(app);
 
 server.listen(app.get('port'),function(){
-  console.log("Server is runnin at port:" + app.get('port'));
+  console.log("Server is running at port:" + app.get('port'));
 });
 
 module.exports = server;
