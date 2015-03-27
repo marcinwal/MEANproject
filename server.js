@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-require('./app_server/models/db');
+require('./app_api/models/db'); //models for dbs
 
 
 var http = require('http');
@@ -28,7 +28,8 @@ app.use(express.static(__dirname,'/public')).use(cookieParser());
 
 
 
-require('./routes')(app);
+require('./routes')(app);  //main
+require('./app_api/routes')(app); //api 
 
 server.listen(app.get('port'),function(){
   console.log("Server is running at port:" + app.get('port'));
