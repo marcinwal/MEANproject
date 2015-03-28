@@ -31,16 +31,40 @@ module.exports.locationsCreate = function(req,res){
 module.exports.locationsListByDistance = function(req,res){
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lng);
+
   var geoOptions = {
     spherical: true, //sperical
     maxDistance: theEarth.getRadsFromDistance(20); //distance from 20 km 
     num: 10 //limiting the number of results
-  }
+  };
+
   var point ={
     type: "Point",
     coordinates: [lng,lat]
   };
-  Loc.geoNear(point,geoOptions,callback)
+
+  if(!lng || !lat) {
+    sendJsonResponse(res,404,{"message": "lng and lat are needed"});
+    return;
+  }
+
+  Loc.geoNear(point,geoOptions,function(err,results,stats){
+    var locations = [];
+    if (err){
+      sendJsonResponse(res,404,err)
+    } else { 
+      results.forEach(function(doc){
+        locations.push({
+          distance: theEarth.getDistanceFromRads(doc.dis),
+          name: doc.obj.name,
+          address: doc.obj.address,
+          rating: doc.obj.rating,
+          facilities: doc.obk.facilities,
+          _id: doc.obj_id
+        });
+    });
+    sendJsonResponse(res,200,locations);  
+  }  
 };
 
 module.exports.locationsReadOne = function(req,res){
