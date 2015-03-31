@@ -7,6 +7,30 @@ if(process.env.NODE_ENV === 'production'){
   apiOptions = 'https://walkiedoggie-uk.herokuapp.com';
 }
 
+
+var renderHomepage = function(req, res, responseBody){
+  var message;
+  if (!(responseBody instanceof Array)) {
+    message = "API lookup error";
+    responseBody = [];
+  } else {
+    if (!responseBody.length) {
+      message = "No places found nearby";
+    }
+  }
+  res.render('locations-list', {
+    title: 'Loc8r - find a place to work with wifi',
+    pageHeader: {
+      title: 'Loc8r',
+      strapline: 'Find places to work with wifi near you!'
+    },
+    sidebar: "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
+    locations: responseBody,
+    message: message
+  });
+};
+
+
 module.exports.homelist = function(req,res){
   res.render('locations-list',{
     title: 'Loc8r - find a place with wifi',
