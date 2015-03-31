@@ -8,6 +8,19 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 
+var _formatDistance = function (distance) {
+  var numDistance, unit;
+  if (distance > 1) {
+    numDistance = parseFloat(distance).toFixed(1);
+    unit = 'km';
+  } else {
+    numDistance = parseInt(distance * 1000,10);
+    unit = 'm'; 
+  }
+  return numDistance + unit;
+};
+
+
 var renderHomepage = function(req, res, responseBody){
   var message;
   if (!(responseBody instanceof Array)) {
@@ -30,6 +43,34 @@ var renderHomepage = function(req, res, responseBody){
   });
 };
 
+
+module.exports.homelist = function(req, res){
+  var requestOptions, path;
+  path = '/api/locations';
+  requestOptions = {
+    url : apiOptions.server + path,
+    method : "GET",
+    json : {},
+    qs : {
+      lng : -0.7992599,
+      lat : 51.378091,
+      maxDistance : 20
+    }
+  };
+  request(
+    requestOptions,
+    function(err, response, body) {
+      var i, data;
+      data = body;
+      if (response.statusCode === 200 && data.length) {
+        for (i=0; i<data.length; i++) {
+          data[i].distance = _formatDistance(data[i].distance);
+        }
+      }
+      renderHomepage(req, res, data);
+    }
+  );
+};
 
 module.exports.homelist = function(req,res){
   res.render('locations-list',{
