@@ -1,29 +1,29 @@
-var require('request');
+var request = require('request');
 var apiOptions = {
-  server = "http://localhost:3000"
+  server : "http://localhost:3000"
 };
-
-if(process.env.NODE_ENV === 'production'){
-  apiOptions = 'https://walkiedoggie-uk.herokuapp.com';
+if (process.env.NODE_ENV === 'production') {
+  apiOptions.server = "https://getting-mean-loc8r.herokuapp.com";
 }
 
 var _isNumeric = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-
-
-
 var _formatDistance = function (distance) {
   var numDistance, unit;
-  if (distance > 1) {
-    numDistance = parseFloat(distance).toFixed(1);
-    unit = 'km';
+  if (distance && _isNumeric(distance)) {
+    if (distance > 1) {
+      numDistance = parseFloat(distance).toFixed(1);
+      unit = 'km';
+    } else {
+      numDistance = parseInt(distance * 1000,10);
+      unit = 'm';
+    }
+    return numDistance + unit;
   } else {
-    numDistance = parseInt(distance * 1000,10);
-    unit = 'm'; 
+    return "?";
   }
-  return numDistance + unit;
 };
 
 var _showError = function (req, res, status) {
@@ -44,7 +44,6 @@ var _showError = function (req, res, status) {
     content : content
   });
 };
-
 
 var renderHomepage = function(req, res, responseBody){
   var message;
@@ -68,7 +67,7 @@ var renderHomepage = function(req, res, responseBody){
   });
 };
 
-
+/* GET 'home' page */
 module.exports.homelist = function(req, res){
   var requestOptions, path;
   path = '/api/locations';
@@ -97,18 +96,6 @@ module.exports.homelist = function(req, res){
   );
 };
 
-var renderDetailPage = function (req, res, locDetail) {
-  res.render('location-info', {
-    title: locDetail.name,
-    pageHeader: {title: locDetail.name},
-    sidebar: {
-      context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
-      callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
-    },
-    location: locDetail
-  });
-};
-
 var getLocationInfo = function (req, res, callback) {
   var requestOptions, path;
   path = "/api/locations/" + req.params.locationid;
@@ -134,6 +121,19 @@ var getLocationInfo = function (req, res, callback) {
   );
 };
 
+var renderDetailPage = function (req, res, locDetail) {
+  res.render('location-info', {
+    title: locDetail.name,
+    pageHeader: {title: locDetail.name},
+    sidebar: {
+      context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
+      callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
+    },
+    location: locDetail
+  });
+};
+
+/* GET 'Location info' page */
 module.exports.locationInfo = function(req, res){
   getLocationInfo(req, res, function(req, res, responseData) {
     renderDetailPage(req, res, responseData);
@@ -145,12 +145,11 @@ var renderReviewForm = function (req, res, locDetail) {
     title: 'Review ' + locDetail.name + ' on Loc8r',
     pageHeader: { title: 'Review ' + locDetail.name },
     user: {
-      displayName: "Marcin Wal"
+      displayName: "Simon Holmes"
     },
     error: req.query.err
   });
 };
-
 
 /* GET 'Add review' page */
 module.exports.addReview = function(req, res){
