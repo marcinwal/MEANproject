@@ -1,1 +1,2 @@
-loc8rApp.js
+angular.module('loc8rApp',[]);
+
