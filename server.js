@@ -24,8 +24,9 @@ app.use(bodyParser.json());
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 // app.use(expressLayouts);  
 
-app.use(express.static(__dirname,'/public')).use(cookieParser());
-
+// app.use(express.static(__dirname,'/public')).use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'app_client')));
 
 
 require('./routes')(app);  //main
