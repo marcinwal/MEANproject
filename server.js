@@ -12,11 +12,18 @@ app.set('views', path.join(__dirname, '/app_server/views'));
 app.set('view engine', 'jade');
 
 var appClientFiles = [
-  'app_client/app.js',
+ 'app_client/app.js',
   'app_client/home/home.controller.js',
+  'app_client/about/about.controller.js',
+  'app_client/locationDetail/locationDetail.controller.js',
+  'app_client/reviewModal/reviewModal.controller.js',
   'app_client/common/services/geolocation.service.js',
   'app_client/common/services/loc8rData.service.js',
   'app_client/common/filters/formatDistance.filter.js',
+  'app_client/common/filters/addHtmlLineBreaks.filter.js',
+  'app_client/common/directives/navigation/navigation.directive.js',
+  'app_client/common/directives/footerGeneric/footerGeneric.directive.js',
+  'app_client/common/directives/pageHeader/pageHeader.directive.js',
   'app_client/common/directives/ratingStars/ratingStars.directive.js'
 ];
 var uglified = UglifyJS.minify(appClientFiles, { compress : false });
@@ -44,8 +51,12 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-require('./routes')(app);
+//require('./routes')(app); taking out and sending
+//to angular routing 
 require('./app_api/routes')(app);
+app.use(function(req,res){
+  res.sendfile(path.join(__dirname,'app_client', 'index.html'));
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
